@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <link rel="stylesheet" href="/static/assets/xterm.min.css" />
+      <script src="/static/assets/xterm.min.js"></script>
+      <script src="/static/assets/attach.min.js"></script>
+      <script src="/static/assets/fit.min.js"></script>
+  </head>
+  <body>
+    <div id="terminal"></div>
+    <script>
+     Terminal.applyAddon(attach);
+     Terminal.applyAddon(fit);
+      var term = new Terminal({
+	    screenKeys: true,
+	    cursorBlink: false,
+      });
+
+      const ws = new WebSocket("ws://"+window.location.host+"/term");
+      ws.addEventListener('open', function () {
+        term.attach(ws);
+      });
+      term.open(document.getElementById("terminal"));
+      term.fit()
+    </script>
+  </body>
+</html>
